@@ -1,5 +1,6 @@
 <template>
     <div>
+
         <h2>About</h2>
         <router-link to="/">Home</router-link>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aspernatur at, autem culpa cupiditate dicta
