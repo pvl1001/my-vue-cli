@@ -1,8 +1,8 @@
 <template>
    <div id="app">
-      <Nav :cardsBasket="cardsBasket" @clickBasket="clickBasket"/>
+      <Nav :cardsBasket="cardsBasket" @clickBasket="clickBasket" />
       <VueSlickCarousel class="slider-home" v-bind="settings">
-         <div v-for="item in 3" :key="item" class="slider-img">
+         <div v-for="item in 5" :key="item" class="slider-img">
             <div class="slider-img__text">
                <h1>Краски</h1>
                <span>
@@ -13,20 +13,29 @@
          </div>
       </VueSlickCarousel>
       <div class="wrapper">
+         <h2 class="titel-mobile">Краски</h2>
          <Filters
+            :class="{ open: filterMobile }"
             @changeFilterNew="changeFilterNew"
             @changeFilterAvail="changeFilterAvail"
             @changeFilterContractual="changeFilterContractual"
             @changeFilterExclusive="changeFilterExclusive"
             @changeFilterSale="changeFilterSale"
+            @closeFilterMobile="closeFilterMobile"
          />
 
          <div class="items">
             <div class="items-row">
+               <div
+                  @click="filterMobile = !filterMobile"
+                  class="btn-filter-mobile"
+               >
+                  Фильтры
+               </div>
                <div class="items__quantity">
                   {{ cardsFilter.length }} товаров
                </div>
-               <VSelect @isClickSelect="isClickSelect"/>
+               <VSelect @isClickSelect="isClickSelect" />
             </div>
             <div class="cards">
                <Card
@@ -65,7 +74,7 @@ export default {
       Filters,
       VSelect,
       Card,
-      Basket
+      Basket,
    },
    data() {
       return {
@@ -104,7 +113,7 @@ export default {
                date: "10.06.2020",
                availability: true,
                contractual: true,
-               exclusive: false
+               exclusive: false,
             },
             {
                id: 3,
@@ -117,7 +126,7 @@ export default {
                date: "01.10.2020",
                availability: true,
                contractual: false,
-               exclusive: true
+               exclusive: true,
             },
             {
                id: 4,
@@ -130,7 +139,7 @@ export default {
                date: "10.10.2020",
                availability: true,
                contractual: false,
-               exclusive: false
+               exclusive: false,
             },
             {
                id: 5,
@@ -143,7 +152,7 @@ export default {
                date: "10.10.2019",
                availability: true,
                contractual: false,
-               exclusive: false
+               exclusive: false,
             },
             {
                id: 6,
@@ -156,7 +165,7 @@ export default {
                date: "10.10.2020",
                availability: true,
                contractual: true,
-               exclusive: true
+               exclusive: true,
             },
             {
                id: 7,
@@ -169,7 +178,7 @@ export default {
                date: "01.03.2020",
                availability: true,
                contractual: false,
-               exclusive: false
+               exclusive: false,
             },
             {
                id: 8,
@@ -182,7 +191,7 @@ export default {
                date: "11.06.2020",
                availability: false,
                contractual: false,
-               exclusive: false
+               exclusive: false,
             },
             {
                id: 9,
@@ -195,7 +204,7 @@ export default {
                date: "10.01.2020",
                availability: true,
                contractual: false,
-               exclusive: false
+               exclusive: false,
             },
             {
                id: 10,
@@ -208,7 +217,7 @@ export default {
                date: "10.05.2019",
                availability: false,
                contractual: false,
-               exclusive: false
+               exclusive: false,
             },
             {
                id: 11,
@@ -221,7 +230,7 @@ export default {
                date: "12.11.2018",
                availability: true,
                contractual: false,
-               exclusive: true
+               exclusive: true,
             },
             {
                id: 12,
@@ -234,7 +243,7 @@ export default {
                date: "20.12.2019",
                availability: true,
                contractual: false,
-               exclusive: false
+               exclusive: false,
             },
             {
                id: 13,
@@ -247,7 +256,7 @@ export default {
                date: "13.12.2020",
                availability: false,
                contractual: false,
-               exclusive: true
+               exclusive: true,
             },
             {
                id: 14,
@@ -260,7 +269,7 @@ export default {
                date: "15.11.2020",
                availability: true,
                contractual: false,
-               exclusive: false
+               exclusive: false,
             },
             {
                id: 15,
@@ -273,141 +282,172 @@ export default {
                date: "15.10.2020",
                availability: true,
                contractual: false,
-               exclusive: false
+               exclusive: false,
             },
          ],
          new: false,
          avail: false,
          contractual: false,
          exclusive: false,
-         sale: false
+         sale: false,
+         filterMobile: false,
       };
    },
    computed: {},
    methods: {
+       closeFilterMobile() {
+           this.filterMobile = !this.filterMobile
+       },
       clearBasket() {
-         this.cardsBasket = []
+         this.cardsBasket = [];
       },
       deleteCard(index) {
-         this.cardsBasket.splice( index, 1 )
+         this.cardsBasket.splice(index, 1);
       },
       clickBasket() {
          this.isClickBasket = !this.isClickBasket;
       },
       addBasket(card) {
          if (this.cardsBasket.length) {
-            let inBasket = false
-            this.cardsBasket.map( el => {
+            let inBasket = false;
+            this.cardsBasket.map((el) => {
                if (el.id === card.id) {
-                  inBasket = true
-                  el.qty++
-                  el.priceTotal += el.price
+                  inBasket = true;
+                  el.qty++;
+                  el.priceTotal += el.price;
                }
-            } )
+            });
             if (!inBasket) {
-               this.cardsBasket.push( card )
-               card.priceTotal += card.price
+               this.cardsBasket.push(card);
+               card.priceTotal += card.price;
             }
          } else {
-            this.cardsBasket.push( card )
-            card.priceTotal += card.price
+            this.cardsBasket.push(card);
+            card.priceTotal += card.price;
          }
-
       },
-      isClickSelect(selectId) {  // сортировка
+      isClickSelect(selectId) {
+         // сортировка
          if (selectId === "option-1") {
-            this.cardsFilter.sort( function (a, b) {
-               return parseFloat( b.price ) - parseFloat( a.price );
-            } );
+            this.cardsFilter.sort(function(a, b) {
+               return parseFloat(b.price) - parseFloat(a.price);
+            });
          }
          if (selectId === "option-2") {
-            this.cardsFilter.sort( function (a, b) {
-               return parseFloat( a.price ) - parseFloat( b.price );
-            } );
+            this.cardsFilter.sort(function(a, b) {
+               return parseFloat(a.price) - parseFloat(b.price);
+            });
          }
          if (selectId === "option-3") {
-            this.cardsFilter.sort( function (a, b) {
-               return parseFloat( b.rating ) - parseFloat( a.rating );
-            } );
+            this.cardsFilter.sort(function(a, b) {
+               return parseFloat(b.rating) - parseFloat(a.rating);
+            });
          }
          if (selectId === "option-4") {
-            let form = (x) => x.split( "." ).reverse().join( "" );
-            this.cardsFilter.sort( function (a, b) {
-               return parseFloat( form( b.date ) ) - form( a.date );
-            } );
+            let form = (x) =>
+               x
+                  .split(".")
+                  .reverse()
+                  .join("");
+            this.cardsFilter.sort(function(a, b) {
+               return parseFloat(form(b.date)) - form(a.date);
+            });
          }
       },
-      changeFilterNew(status) {  // фильтр новинки
-         this.new = status
+      changeFilterNew(status) {
+         // фильтр новинки
+         this.new = status;
          if (status) {
-            let form = (x) => Number( x.split( "." ).reverse().join( "" ) )
+            let form = (x) =>
+               Number(
+                  x
+                     .split(".")
+                     .reverse()
+                     .join("")
+               );
             this.cardsFilter = this.cardsFilter.filter(
-               (card) => form( card.date ) < 20201001
-            )
+               (card) => form(card.date) < 20201001
+            );
          } else if (!status) {
-            this.cardsFilter = this.cards
-            if (this.avail) this.changeFilterAvail( this.avail )
-            if (this.contractual) this.changeFilterContractual( this.contractual )
-            if (this.exclusive) this.changeFilterExclusive( this.exclusive )
-            if (this.sale) this.changeFilterSale( this.sale )
-         } else this.cardsFilter = []
+            this.cardsFilter = this.cards;
+            if (this.avail) this.changeFilterAvail(this.avail);
+            if (this.contractual)
+               this.changeFilterContractual(this.contractual);
+            if (this.exclusive) this.changeFilterExclusive(this.exclusive);
+            if (this.sale) this.changeFilterSale(this.sale);
+         } else this.cardsFilter = [];
       },
-      changeFilterAvail(status) { // фильтр наличие
-         this.avail = status
+      changeFilterAvail(status) {
+         // фильтр наличие
+         this.avail = status;
          if (status) {
-            this.cardsFilter = this.cardsFilter.filter( card => card.availability )
+            this.cardsFilter = this.cardsFilter.filter(
+               (card) => card.availability
+            );
          } else if (!status) {
-            this.cardsFilter = this.cards
-            if (this.new) this.changeFilterNew( this.new )
-            if (this.contractual) this.changeFilterContractual( this.contractual )
-            if (this.exclusive) this.changeFilterExclusive( this.exclusive )
-            if (this.sale) this.changeFilterSale( this.sale )
-         } else this.cardsFilter = []
+            this.cardsFilter = this.cards;
+            if (this.new) this.changeFilterNew(this.new);
+            if (this.contractual)
+               this.changeFilterContractual(this.contractual);
+            if (this.exclusive) this.changeFilterExclusive(this.exclusive);
+            if (this.sale) this.changeFilterSale(this.sale);
+         } else this.cardsFilter = [];
       },
-      changeFilterContractual(status) { // фильтр контрактные
-         this.contractual = status
+      changeFilterContractual(status) {
+         // фильтр контрактные
+         this.contractual = status;
          if (status) {
-            this.cardsFilter = this.cardsFilter.filter( card => card.contractual )
+            this.cardsFilter = this.cardsFilter.filter(
+               (card) => card.contractual
+            );
          } else if (!status) {
-            this.cardsFilter = this.cards
-            if (this.new) this.changeFilterNew( this.new )
-            if (this.avail) this.changeFilterAvail( this.avail )
-            if (this.exclusive) this.changeFilterExclusive( this.exclusive )
-            if (this.sale) this.changeFilterSale( this.sale )
-         } else this.cardsFilter = []
+            this.cardsFilter = this.cards;
+            if (this.new) this.changeFilterNew(this.new);
+            if (this.avail) this.changeFilterAvail(this.avail);
+            if (this.exclusive) this.changeFilterExclusive(this.exclusive);
+            if (this.sale) this.changeFilterSale(this.sale);
+         } else this.cardsFilter = [];
       },
-      changeFilterExclusive(status) { // фильтр эксклюзив
-         this.exclusive = status
+      changeFilterExclusive(status) {
+         // фильтр эксклюзив
+         this.exclusive = status;
          if (status) {
-            this.cardsFilter = this.cardsFilter.filter( card => card.exclusive )
+            this.cardsFilter = this.cardsFilter.filter(
+               (card) => card.exclusive
+            );
          } else if (!status) {
-            this.cardsFilter = this.cards
-            if (this.new) this.changeFilterNew( this.new )
-            if (this.avail) this.changeFilterAvail( this.avail )
-            if (this.contractual) this.changeFilterContractual( this.contractual )
-            if (this.sale) this.changeFilterSale( this.sale )
-         } else this.cardsFilter = []
+            this.cardsFilter = this.cards;
+            if (this.new) this.changeFilterNew(this.new);
+            if (this.avail) this.changeFilterAvail(this.avail);
+            if (this.contractual)
+               this.changeFilterContractual(this.contractual);
+            if (this.sale) this.changeFilterSale(this.sale);
+         } else this.cardsFilter = [];
       },
-      changeFilterSale(status) { // фильтр распродажа
-         this.sale = status
+      changeFilterSale(status) {
+         // фильтр распродажа
+         this.sale = status;
          if (status) {
-            this.cardsFilter = this.cardsFilter.filter( card => card.price < 3000 )
+            this.cardsFilter = this.cardsFilter.filter(
+               (card) => card.price < 3000
+            );
          } else if (!status) {
-            this.cardsFilter = this.cards
-            if (this.new) this.changeFilterNew( this.new )
-            if (this.avail) this.changeFilterAvail( this.avail )
-            if (this.contractual) this.changeFilterContractual( this.contractual )
-            if (this.exclusive) this.changeFilterExclusive( this.exclusive )
-         } else this.cardsFilter = []
-      }
+            this.cardsFilter = this.cards;
+            if (this.new) this.changeFilterNew(this.new);
+            if (this.avail) this.changeFilterAvail(this.avail);
+            if (this.contractual)
+               this.changeFilterContractual(this.contractual);
+            if (this.exclusive) this.changeFilterExclusive(this.exclusive);
+         } else this.cardsFilter = [];
+      },
    },
    created() {
       this.cardsFilter = this.cards;
    },
    mounted() {
-      fetch( "https://jsonplaceholder.typicode.com/todos?_limit=3" )
-         .then( (response) => response.json() )
-         .then( (json) => (this.todos = json) );
+      fetch("https://jsonplaceholder.typicode.com/todos?_limit=3")
+         .then((response) => response.json())
+         .then((json) => (this.todos = json));
    },
 };
 </script>
@@ -446,7 +486,7 @@ body {
 button {
    cursor: pointer;
    border: 0;
-   background: #7BB899;
+   background: #7bb899;
    border-radius: 4px;
 }
 
@@ -471,10 +511,12 @@ button {
    }
 }
 
-@media (max-width: 767px) {
-   .wrapper {
-      padding: 0 20px;
-   }
+.d-flex {
+   display: flex;
+}
+
+.justify-content-beetwin {
+   justify-content: space-between;
 }
 </style>
 
@@ -500,13 +542,21 @@ button {
    .slick-arrow {
       border-radius: 50%;
       z-index: 1;
-      width: 28px;
-      height: 51px;
-      background: url("./assets/svg/slide-arrow.svg") center / contain no-repeat;
-      //opacity: 0;
+      background: url("./assets/svg/slide-arrow.svg") 55.7% 68.5% / 22px
+         no-repeat;
+      right: 0;
+      top: 0;
+      width: 50%;
+      height: 100%;
+      opacity: 0;
+      transition: 0.5s;
 
       &:before {
          display: none;
+      }
+
+      &:hover {
+         opacity: 1;
       }
    }
 
@@ -514,19 +564,16 @@ button {
    .slick-prev:focus,
    .slick-next:hover,
    .slick-next:focus {
-      background: url("./assets/svg/slide-arrow.svg") center / contain no-repeat !important;
+      background: url("./assets/svg/slide-arrow.svg") 55.7% 68.5% / 22px
+         no-repeat;
    }
 
    .slick-arrow.slick-prev {
       transform: rotateY(180deg);
-      left: 21.7%;
-      top: 62.5%;
    }
 
    .slick-arrow.slick-next {
       transform: rotateY(0deg);
-      right: 21.7%;
-      top: 62.5%;
    }
 
    .slick-dots {
@@ -630,6 +677,7 @@ button {
 .cards {
    display: flex;
    flex-wrap: wrap;
+   margin: 0 -12px;
 }
 
 .btn {
@@ -641,5 +689,38 @@ button {
 footer {
    height: 313px;
    background-color: #000;
+}
+
+.titel-mobile,
+.btn-filter-mobile {
+   display: none;
+}
+
+@media (max-width: 1300px) {
+   .wrapper {
+      padding: 0 24px;
+      flex-wrap: wrap;
+   }
+
+   .slider-home,
+   .items__quantity {
+      display: none !important;
+   }
+
+   .titel-mobile {
+      display: inline-block;
+      font-size: 36px;
+      line-height: 88%;
+      letter-spacing: -0.04em;
+      margin-bottom: 48px;
+   }
+
+   .cards {
+      margin: 0 -7px;
+   }
+
+   .btn-filter-mobile {
+      display: block;
+   }
 }
 </style>

@@ -2,31 +2,29 @@
    <div class="Card">
       <div class="Card-wrapper">
          <div class="Card__img">
-            <img :src="require('../assets/img/' + card.img)" alt="image"/>
-            <img class="img-hover" src="../assets/img/Border.png" alt="image"/>
+            <img :src="require('../assets/img/' + card.img)" alt="image" />
+            <img class="img-hover" src="../assets/img/Border.png" alt="image" />
          </div>
-         <div class="Card__name">{{ card.name }} <br> {{ card.date }}</div>
+         <div class="Card__name">{{ card.name }}</div>
          <div class="Card__price">
             <div>{{ card.price }} ₽</div>
             <div @click="addBasket" class="btn plus"></div>
          </div>
       </div>
    </div>
-
 </template>
 
 <script>
-
 export default {
    name: "Card",
    props: ["card"],
 
    methods: {
       addBasket() {
-         this.$emit( "addBasket", this.card );
+         this.$emit("addBasket", this.card);
       },
    },
-}
+};
 </script>
 
 <style scoped lang="scss">
@@ -35,6 +33,7 @@ export default {
    margin-bottom: 16px;
    box-sizing: border-box;
    padding: 0 12px;
+   position: relative;
 
    .Card-wrapper {
       border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -42,9 +41,16 @@ export default {
       position: relative;
    }
 
-   //&:nth-last-child(-n + 5) {
-   //   border: 0;
-   //}
+   &:last-child:before {
+      content: "";
+      height: 2px;
+      position: absolute;
+      width: calc(500% + 24 * 4px);
+      right: 0;
+      bottom: 0;
+      background-color: #fff;
+      z-index: 1;
+   }
 
    &:hover {
       .img-hover {
@@ -62,10 +68,8 @@ export default {
       padding: 15%;
       margin: 0 auto 10px;
       text-align: center;
-      //height: 270px;
 
       img {
-         //width: 100%;
          max-width: 100%;
          max-height: 100%;
          display: inline-block;
@@ -80,6 +84,7 @@ export default {
          left: 0;
          max-width: 100%;
          max-height: 100%;
+         transition: 0.3s;
       }
    }
 
@@ -110,11 +115,19 @@ export default {
       }
 
       .btn.plus {
-         background: #7bb899 url("../assets/svg/plus.svg") center / 20px no-repeat;
+         background: #7bb899 url("../assets/svg/plus.svg") center / 20px
+            no-repeat;
          visibility: hidden;
          opacity: 0;
          transition: 0.2s;
       }
+   }
+}
+
+@media (max-width: 1300px) {
+   .Card {
+      width: 50%;
+      padding: 0 7px;
    }
 }
 </style>
