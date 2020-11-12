@@ -503,6 +503,7 @@ button {
       width: 28px;
       height: 51px;
       background: url("./assets/svg/slide-arrow.svg") center / contain no-repeat;
+      //opacity: 0;
 
       &:before {
          display: none;

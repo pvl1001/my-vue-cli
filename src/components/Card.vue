@@ -59,13 +59,15 @@ export default {
    }
 
    &__img {
-      //padding: 40px;
+      padding: 15%;
       margin: 0 auto 10px;
+      text-align: center;
+      //height: 270px;
 
       img {
-         width: 100%;
-         max-width: 200px;
-         max-height: 200px;
+         //width: 100%;
+         max-width: 100%;
+         max-height: 100%;
          display: inline-block;
          transition: opacity 0.2s;
       }
