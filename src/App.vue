@@ -85,18 +85,20 @@ export default {
                img: "Photo (1).png",
                name: "Краска Wallquest, Brownsone MS90102",
                price: 6000,
+               priceTotal: 0,
                rating: 0,
                qty: 1,
                date: "10.10.2020",
                availability: true,
                contractual: false,
-               exclusive: true
+               exclusive: true,
             },
             {
                id: 2,
                img: "Photo (1).png",
                name: "Краска Wallquest, Brownsone MS90102",
                price: 4800,
+               priceTotal: 0,
                rating: 0,
                qty: 1,
                date: "10.06.2020",
@@ -109,6 +111,7 @@ export default {
                img: "Photo (2).png",
                name: "Краска Wallquest, Brownsone MS90102",
                price: 5290,
+               priceTotal: 0,
                rating: 2,
                qty: 1,
                date: "01.10.2020",
@@ -121,6 +124,7 @@ export default {
                img: "Photo (3).png",
                name: "Краска Wallquest, Brownsone MS90102",
                price: 2800,
+               priceTotal: 0,
                rating: 10,
                qty: 1,
                date: "10.10.2020",
@@ -133,6 +137,7 @@ export default {
                img: "Photo (4).png",
                name: "Краска Wallquest, Brownsone MS90102",
                price: 3400,
+               priceTotal: 0,
                rating: 1,
                qty: 1,
                date: "10.10.2019",
@@ -145,6 +150,7 @@ export default {
                img: "Photo (1).png",
                name: "Краска Wallquest, Brownsone MS90102",
                price: 6000,
+               priceTotal: 0,
                rating: 6,
                qty: 1,
                date: "10.10.2020",
@@ -157,6 +163,7 @@ export default {
                img: "Photo (1).png",
                name: "Краска Wallquest, Brownsone MS90102",
                price: 4800,
+               priceTotal: 0,
                rating: 6,
                qty: 1,
                date: "01.03.2020",
@@ -169,6 +176,7 @@ export default {
                img: "Photo (2).png",
                name: "Краска Wallquest, Brownsone MS90102",
                price: 5290,
+               priceTotal: 0,
                rating: 0,
                qty: 1,
                date: "11.06.2020",
@@ -181,6 +189,7 @@ export default {
                img: "Photo (3).png",
                name: "Краска Wallquest, Brownsone MS90102",
                price: 2800,
+               priceTotal: 0,
                rating: 10,
                qty: 1,
                date: "10.01.2020",
@@ -193,6 +202,7 @@ export default {
                img: "Photo (4).png",
                name: "Краска Wallquest, Brownsone MS90102",
                price: 3400,
+               priceTotal: 0,
                rating: 9,
                qty: 1,
                date: "10.05.2019",
@@ -205,6 +215,7 @@ export default {
                img: "Photo (1).png",
                name: "Краска Wallquest, Brownsone MS90102",
                price: 6000,
+               priceTotal: 0,
                rating: 8,
                qty: 1,
                date: "12.11.2018",
@@ -217,6 +228,7 @@ export default {
                img: "Photo (1).png",
                name: "Краска Wallquest, Brownsone MS90102",
                price: 4800,
+               priceTotal: 0,
                rating: 3,
                qty: 1,
                date: "20.12.2019",
@@ -229,6 +241,7 @@ export default {
                img: "Photo (2).png",
                name: "Краска Wallquest, Brownsone MS90102",
                price: 5290,
+               priceTotal: 0,
                rating: 0,
                qty: 1,
                date: "13.12.2020",
@@ -241,6 +254,7 @@ export default {
                img: "Photo (3).png",
                name: "Краска Wallquest, Brownsone MS90102",
                price: 2800,
+               priceTotal: 0,
                rating: 2,
                qty: 1,
                date: "15.11.2020",
@@ -253,6 +267,7 @@ export default {
                img: "Photo (4).png",
                name: "Краска Wallquest, Brownsone MS90102",
                price: 3400,
+               priceTotal: 0,
                rating: 12,
                qty: 1,
                date: "15.10.2020",
@@ -286,13 +301,16 @@ export default {
                if (el.id === card.id) {
                   inBasket = true
                   el.qty++
+                  el.priceTotal += el.price
                }
             } )
             if (!inBasket) {
                this.cardsBasket.push( card )
+               card.priceTotal += card.price
             }
          } else {
             this.cardsBasket.push( card )
+            card.priceTotal += card.price
          }
 
       },
@@ -427,6 +445,9 @@ body {
 
 button {
    cursor: pointer;
+   border: 0;
+   background: #7BB899;
+   border-radius: 4px;
 }
 
 .wrapper {
@@ -434,7 +455,6 @@ button {
    max-width: 1920px;
    padding: 0 64px;
    display: flex;
-   //justify-content: center;
 }
 
 #app {

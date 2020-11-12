@@ -10,11 +10,23 @@
             <div @click="clearBasket">Очистить список</div>
          </div>
 
-         <CardBasket
-            v-for="(card, index) of cardsBasket"
-            :card="card"
-            :key="index"
-            @deleteCard="deleteCard(index)"/>
+         <div class="Basket__card-basket-wrapper">
+            <CardBasket
+               v-for="(card, index) of cardsBasket"
+               :card="card"
+               :key="index"
+               @deleteCard="deleteCard(index)"
+               @qtyPlus="qtyPlus"
+            />
+         </div>
+
+         <div class="Basket__total">
+            <div class="Basket__total_total">
+               <div>Итого</div>
+               <div>{{ totalPrice }}₽</div>
+            </div>
+            <button>Оформить заказ</button>
+         </div>
       </div>
    </div>
 </template>
@@ -30,12 +42,24 @@ export default {
    },
 
    data() {
-      return {}
+      return {
+         total: 0,
+         count: 0
+      }
    },
-
+   computed: {
+      totalPrice() {
+         return this.cardsBasket.reduce( (total, el) => {
+            return total + el.priceTotal
+         }, 0 )
+      }
+   },
    methods: {
+      qtyPlus(count) {
+         this.$emit('qtyPlus', count)
+      },
       clearBasket() {
-         this.$emit('clearBasket')
+         this.$emit( 'clearBasket' )
       },
       closeBasket() {
          this.$emit( "closeBasket" );
@@ -77,6 +101,8 @@ export default {
       transition: 0.3s;
       box-sizing: border-box;
       overflow: auto;
+      display: flex;
+      flex-direction: column;
    }
 
    &__title {
@@ -118,8 +144,14 @@ export default {
       }
    }
 
+   &__card-basket-wrapper {
+      flex-grow: 1;
+      margin-bottom: 40px;
+   }
+
    &__item {
       display: flex;
+      flex-grow: 1;
       align-items: center;
       height: 96px;
       padding: 12px 0;
@@ -189,6 +221,36 @@ export default {
          opacity: 0.2;
          cursor: pointer;
          flex-shrink: 0;
+      }
+   }
+
+   &__total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      &_total {
+         div:first-child {
+            font-size: 16px;
+            line-height: 100%;
+            margin-bottom: 6px;
+         }
+
+         div:last-child {
+            font-weight: 500;
+            font-size: 30px;
+            line-height: 100%;
+            letter-spacing: -0.02em;
+         }
+      }
+
+      button {
+         width: 240px;
+         height: 56px;
+         font-weight: 500;
+         font-size: 12px;
+         letter-spacing: 0.06em;
+         text-transform: uppercase;
       }
    }
 }

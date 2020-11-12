@@ -4,12 +4,12 @@
          <img :src="require('../assets/img/' + card.img)" alt="image"/>
          <div>
             <div class="Basket__item_name">{{ card.name }}</div>
-            <div class="Basket__item_price">{{ card.price }}  ₽</div>
+            <div class="Basket__item_price">{{ card.price }} ₽</div>
          </div>
       </router-link>
       <div @click="qtyRemove" class="Basket__counter_btn minus"></div>
       <div class="Basket__counter_count">{{ card.qty }}</div>
-      <div @click="card.qty++" class="Basket__counter_btn plus"></div>
+      <div @click="qtyPlus" class="Basket__counter_btn plus"></div>
       <div @click="deleteCard" class="Basket__counter_delete"></div>
    </div>
 </template>
@@ -18,10 +18,19 @@
 export default {
    name: "CardBasket",
    props: ['card'],
+   data() {
+      return {}
+   },
 
    methods: {
+      qtyPlus() {
+         this.card.qty++
+         this.card.priceTotal = this.card.price * this.card.qty
+         this.$emit('qtyPlus', this.priceCounter)
+      },
       qtyRemove() {
          if(this.card.qty > 1) this.card.qty--
+         this.card.priceTotal = this.card.price * this.card.qty
       },
       deleteCard() {
          this.$emit('deleteCard')
