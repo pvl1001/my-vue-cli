@@ -1,12 +1,14 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router.js'
-import VueSlickCarousel from './plugins/VueSlickCarousel.js'
+import store from './store.js'
+// import './plugins/Bootstrap'
+import './plugins/VueSlickCarousel'
 
 Vue.config.productionTip = false
 
 new Vue({
-  VueSlickCarousel,
+  store,
   router,
   render: h => h(App),
 }).$mount('#app')

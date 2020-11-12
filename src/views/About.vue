@@ -1,8 +1,7 @@
 <template>
     <div>
-
-        <h2>About</h2>
-        <router-link to="/">Home</router-link>
+        <h2>{{ titles.about }}</h2>
+        <router-link to="/">{{ titles.home }}</router-link>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aspernatur at, autem culpa cupiditate dicta
             dolore doloremque doloribus ea error expedita fugit hic illo itaque magni minima minus mollitia non nostrum
             pariatur quidem quod quos repudiandae sapiente, similique ullam vitae voluptatum! Aspernatur assumenda
@@ -44,6 +43,7 @@
 
 <script>
     export default {
+        props: ['titles'],
         name: "About"
     }
 </script>
