@@ -59,17 +59,15 @@ export default {
    }
 
    &__img {
-      padding: 40px;
-      margin-bottom: 10px;
-      //height: 278px;
-      //border: 1px solid red;
+      //padding: 40px;
+      margin: 0 auto 10px;
 
       img {
-         max-width: 100%;
-         max-height: 100%;
+         width: 100%;
+         max-width: 200px;
+         max-height: 200px;
          display: inline-block;
-         transition: 0.2s;
-         //border: 1px solid blue;
+         transition: opacity 0.2s;
       }
 
       .img-hover {
@@ -78,6 +76,8 @@ export default {
          position: absolute;
          top: 0;
          left: 0;
+         max-width: 100%;
+         max-height: 100%;
       }
    }
 
