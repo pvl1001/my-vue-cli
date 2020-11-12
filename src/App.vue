@@ -30,8 +30,8 @@
             </div>
             <div class="cards">
                <Card
-                  v-for="card of cardsFilter"
-                  :key="card.id"
+                  v-for="(card, index) of cardsFilter"
+                  :key="index"
                   :card="card"
                   @addBasket="addBasket"
                />
@@ -281,16 +281,16 @@ export default {
       },
       addBasket(card) {
          if (this.cardsBasket.length) {
-            let empty = true
+            let inBasket = false
             this.cardsBasket.map( el => {
                if (el.id === card.id) {
-                  empty = false
+                  inBasket = true
                   el.qty++
-               } else if (empty) {
-                  this.cardsBasket.push( card )
                }
             } )
-
+            if (!inBasket) {
+               this.cardsBasket.push( card )
+            }
          } else {
             this.cardsBasket.push( card )
          }
