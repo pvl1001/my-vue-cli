@@ -8,7 +8,9 @@
 
       <div class="Nav__wrapper wrapper-1">
          <div class="Nav__logo">
-            <img src="../assets/img/Frame 37.png" />
+            <router-link to="/">
+               <img src="../assets/img/Frame 37.png" />
+            </router-link>
          </div>
 
          <nav>
@@ -232,6 +234,7 @@ nav a {
    .Nav.wrapper {
       height: 64px;
       border-bottom: 1px solid rgba(31, 32, 32,.06);
+      margin-bottom: 16px;
    }
 
    .Nav__phone,

@@ -206,6 +206,7 @@ label {
       background-color: rgba(0, 0, 0, 0.7);
       visibility: hidden;
       opacity: 0;
+      transition: .3s;
    }
 
    .Filters {

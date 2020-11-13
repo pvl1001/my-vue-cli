@@ -1,6 +1,7 @@
 <template>
    <div id="app">
-      <Nav :cardsBasket="cardsBasket" @clickBasket="clickBasket" />
+      <Nav :cardsBasket="cardsBasket" @clickBasket="clickBasket"/>
+      <Breadcrumbs />
       <VueSlickCarousel class="slider-home" v-bind="settings">
          <div v-for="item in 5" :key="item" class="slider-img">
             <div class="slider-img__text">
@@ -35,7 +36,7 @@
                <div class="items__quantity">
                   {{ cardsFilter.length }} товаров
                </div>
-               <VSelect @isClickSelect="isClickSelect" />
+               <VSelect @isClickSelect="isClickSelect"/>
             </div>
             <div class="cards">
                <Card
@@ -66,6 +67,7 @@ import Filters from "@/components/Filters";
 import VSelect from "@/components/VSelect";
 import Card from "@/components/Card";
 import Basket from "@/components/Basket";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default {
    name: "App",
@@ -75,6 +77,7 @@ export default {
       VSelect,
       Card,
       Basket,
+      Breadcrumbs
    },
    data() {
       return {
@@ -295,14 +298,14 @@ export default {
    },
    computed: {},
    methods: {
-       closeFilterMobile() {
-           this.filterMobile = !this.filterMobile
-       },
+      closeFilterMobile() {
+         this.filterMobile = !this.filterMobile
+      },
       clearBasket() {
          this.cardsBasket = [];
       },
       deleteCard(index) {
-         this.cardsBasket.splice(index, 1);
+         this.cardsBasket.splice( index, 1 );
       },
       clickBasket() {
          this.isClickBasket = !this.isClickBasket;
@@ -310,48 +313,48 @@ export default {
       addBasket(card) {
          if (this.cardsBasket.length) {
             let inBasket = false;
-            this.cardsBasket.map((el) => {
+            this.cardsBasket.map( (el) => {
                if (el.id === card.id) {
                   inBasket = true;
                   el.qty++;
                   el.priceTotal += el.price;
                }
-            });
+            } );
             if (!inBasket) {
-               this.cardsBasket.push(card);
+               this.cardsBasket.push( card );
                card.priceTotal += card.price;
             }
          } else {
-            this.cardsBasket.push(card);
+            this.cardsBasket.push( card );
             card.priceTotal += card.price;
          }
       },
       isClickSelect(selectId) {
          // сортировка
          if (selectId === "option-1") {
-            this.cardsFilter.sort(function(a, b) {
-               return parseFloat(b.price) - parseFloat(a.price);
-            });
+            this.cardsFilter.sort( function (a, b) {
+               return parseFloat( b.price ) - parseFloat( a.price );
+            } );
          }
          if (selectId === "option-2") {
-            this.cardsFilter.sort(function(a, b) {
-               return parseFloat(a.price) - parseFloat(b.price);
-            });
+            this.cardsFilter.sort( function (a, b) {
+               return parseFloat( a.price ) - parseFloat( b.price );
+            } );
          }
          if (selectId === "option-3") {
-            this.cardsFilter.sort(function(a, b) {
-               return parseFloat(b.rating) - parseFloat(a.rating);
-            });
+            this.cardsFilter.sort( function (a, b) {
+               return parseFloat( b.rating ) - parseFloat( a.rating );
+            } );
          }
          if (selectId === "option-4") {
             let form = (x) =>
                x
-                  .split(".")
+                  .split( "." )
                   .reverse()
-                  .join("");
-            this.cardsFilter.sort(function(a, b) {
-               return parseFloat(form(b.date)) - form(a.date);
-            });
+                  .join( "" );
+            this.cardsFilter.sort( function (a, b) {
+               return parseFloat( form( b.date ) ) - form( a.date );
+            } );
          }
       },
       changeFilterNew(status) {
@@ -361,20 +364,20 @@ export default {
             let form = (x) =>
                Number(
                   x
-                     .split(".")
+                     .split( "." )
                      .reverse()
-                     .join("")
+                     .join( "" )
                );
             this.cardsFilter = this.cardsFilter.filter(
-               (card) => form(card.date) < 20201001
+               (card) => form( card.date ) < 20201001
             );
          } else if (!status) {
             this.cardsFilter = this.cards;
-            if (this.avail) this.changeFilterAvail(this.avail);
+            if (this.avail) this.changeFilterAvail( this.avail );
             if (this.contractual)
-               this.changeFilterContractual(this.contractual);
-            if (this.exclusive) this.changeFilterExclusive(this.exclusive);
-            if (this.sale) this.changeFilterSale(this.sale);
+               this.changeFilterContractual( this.contractual );
+            if (this.exclusive) this.changeFilterExclusive( this.exclusive );
+            if (this.sale) this.changeFilterSale( this.sale );
          } else this.cardsFilter = [];
       },
       changeFilterAvail(status) {
@@ -386,11 +389,11 @@ export default {
             );
          } else if (!status) {
             this.cardsFilter = this.cards;
-            if (this.new) this.changeFilterNew(this.new);
+            if (this.new) this.changeFilterNew( this.new );
             if (this.contractual)
-               this.changeFilterContractual(this.contractual);
-            if (this.exclusive) this.changeFilterExclusive(this.exclusive);
-            if (this.sale) this.changeFilterSale(this.sale);
+               this.changeFilterContractual( this.contractual );
+            if (this.exclusive) this.changeFilterExclusive( this.exclusive );
+            if (this.sale) this.changeFilterSale( this.sale );
          } else this.cardsFilter = [];
       },
       changeFilterContractual(status) {
@@ -402,10 +405,10 @@ export default {
             );
          } else if (!status) {
             this.cardsFilter = this.cards;
-            if (this.new) this.changeFilterNew(this.new);
-            if (this.avail) this.changeFilterAvail(this.avail);
-            if (this.exclusive) this.changeFilterExclusive(this.exclusive);
-            if (this.sale) this.changeFilterSale(this.sale);
+            if (this.new) this.changeFilterNew( this.new );
+            if (this.avail) this.changeFilterAvail( this.avail );
+            if (this.exclusive) this.changeFilterExclusive( this.exclusive );
+            if (this.sale) this.changeFilterSale( this.sale );
          } else this.cardsFilter = [];
       },
       changeFilterExclusive(status) {
@@ -417,11 +420,11 @@ export default {
             );
          } else if (!status) {
             this.cardsFilter = this.cards;
-            if (this.new) this.changeFilterNew(this.new);
-            if (this.avail) this.changeFilterAvail(this.avail);
+            if (this.new) this.changeFilterNew( this.new );
+            if (this.avail) this.changeFilterAvail( this.avail );
             if (this.contractual)
-               this.changeFilterContractual(this.contractual);
-            if (this.sale) this.changeFilterSale(this.sale);
+               this.changeFilterContractual( this.contractual );
+            if (this.sale) this.changeFilterSale( this.sale );
          } else this.cardsFilter = [];
       },
       changeFilterSale(status) {
@@ -433,11 +436,11 @@ export default {
             );
          } else if (!status) {
             this.cardsFilter = this.cards;
-            if (this.new) this.changeFilterNew(this.new);
-            if (this.avail) this.changeFilterAvail(this.avail);
+            if (this.new) this.changeFilterNew( this.new );
+            if (this.avail) this.changeFilterAvail( this.avail );
             if (this.contractual)
-               this.changeFilterContractual(this.contractual);
-            if (this.exclusive) this.changeFilterExclusive(this.exclusive);
+               this.changeFilterContractual( this.contractual );
+            if (this.exclusive) this.changeFilterExclusive( this.exclusive );
          } else this.cardsFilter = [];
       },
    },
@@ -445,16 +448,14 @@ export default {
       this.cardsFilter = this.cards;
    },
    mounted() {
-      fetch("https://jsonplaceholder.typicode.com/todos?_limit=3")
-         .then((response) => response.json())
-         .then((json) => (this.todos = json));
+      fetch( "https://jsonplaceholder.typicode.com/todos?_limit=3" )
+         .then( (response) => response.json() )
+         .then( (json) => (this.todos = json) );
    },
 };
 </script>
 
 <style lang="scss">
-//@import '~bootstrap';
-//@import '~bootstrap-vue';
 @import "./assets/font/stylesheet.css";
 
 html,
@@ -542,8 +543,7 @@ button {
    .slick-arrow {
       border-radius: 50%;
       z-index: 1;
-      background: url("./assets/svg/slide-arrow.svg") 55.7% 68.5% / 22px
-         no-repeat;
+      background: url("./assets/svg/slide-arrow.svg") 55.7% 68.5% / 22px no-repeat;
       right: 0;
       top: 0;
       width: 50%;
@@ -564,8 +564,7 @@ button {
    .slick-prev:focus,
    .slick-next:hover,
    .slick-next:focus {
-      background: url("./assets/svg/slide-arrow.svg") 55.7% 68.5% / 22px
-         no-repeat;
+      background: url("./assets/svg/slide-arrow.svg") 55.7% 68.5% / 22px no-repeat;
    }
 
    .slick-arrow.slick-prev {

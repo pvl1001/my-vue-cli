@@ -2,8 +2,8 @@
    <div class="Card">
       <div class="Card-wrapper">
          <div class="Card__img">
-            <img :src="require('../assets/img/' + card.img)" alt="image" />
-            <img class="img-hover" src="../assets/img/Border.png" alt="image" />
+            <img :src="require('../assets/img/' + card.img)" alt="image"/>
+            <img class="img-hover" src="../assets/img/Border.png" alt="image"/>
          </div>
          <div class="Card__name">{{ card.name }}</div>
          <div class="Card__price">
@@ -21,7 +21,7 @@ export default {
 
    methods: {
       addBasket() {
-         this.$emit("addBasket", this.card);
+         this.$emit( "addBasket", this.card );
       },
    },
 };
@@ -39,6 +39,9 @@ export default {
       border-bottom: 1px solid rgba(0, 0, 0, 0.1);
       cursor: pointer;
       position: relative;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
    }
 
    &:last-child:before {
@@ -102,6 +105,7 @@ export default {
       line-height: 112%;
       letter-spacing: 0.02em;
       margin-bottom: 16px;
+      flex-grow: 1;
    }
 
    &__price {
@@ -115,8 +119,7 @@ export default {
       }
 
       .btn.plus {
-         background: #7bb899 url("../assets/svg/plus.svg") center / 20px
-            no-repeat;
+         background: #7bb899 url("../assets/svg/plus.svg") center / 20px no-repeat;
          visibility: hidden;
          opacity: 0;
          transition: 0.2s;
@@ -126,8 +129,23 @@ export default {
 
 @media (max-width: 1300px) {
    .Card {
-      width: 50%;
+      width: 25%;
       padding: 0 7px;
+   }
+
+   .Card__price .btn.plus {
+      background: #F2F2F2 url("../assets/svg/plus.svg") center / 16px no-repeat;
+      visibility: visible;
+      opacity: 1 !important;
+      width: 40px;
+      height: 24px;
+   }
+
+}
+
+@media (max-width: 767px) {
+   .Card {
+      width: 50%;
    }
 }
 </style>
