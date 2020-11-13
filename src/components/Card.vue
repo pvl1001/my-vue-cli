@@ -50,7 +50,7 @@ export default {
       position: absolute;
       width: calc(500% + 24 * 4px);
       right: 0;
-      bottom: 0;
+      bottom: -1px;
       background-color: #fff;
       z-index: 1;
    }
