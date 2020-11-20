@@ -1,13 +1,15 @@
 <template>
    <div class="Basket" :class="{ open: isClickBasket }">
       <div class="Basket__list">
-         <div class="Basket__title">
-            <h2>Корзина</h2>
-            <div @click="closeBasket" class="Basket__title_btn-close"></div>
-         </div>
-         <div class="Basket__number">
-            <div>{{ cardsBasket.length }} товара</div>
-            <div @click="clearBasket">Очистить список</div>
+         <div class="Basket__head">
+            <div class="Basket__title">
+               <h2>Корзина</h2>
+               <div @click="closeBasket" class="Basket__title_btn-close"></div>
+            </div>
+            <div class="Basket__number">
+               <div>{{ cardsBasket.length }} товара</div>
+               <div @click="clearBasket">Очистить список</div>
+            </div>
          </div>
 
          <div class="Basket__card-basket-wrapper">
@@ -63,6 +65,8 @@ export default {
       },
       closeBasket() {
          this.$emit( "closeBasket" );
+         document.body.classList.remove('no-scroll')
+
       },
       deleteCard(index) {
          this.$emit( 'deleteCard', index )
@@ -90,6 +94,14 @@ export default {
    opacity: 0;
    transition: 0.3s;
 
+   &__head {
+      position: sticky;
+      top: 0;
+      background-color: #fff;
+      z-index: 1;
+      padding-top: 40px;
+   }
+
    &__list {
       position: absolute;
       right: -600px;
@@ -97,7 +109,7 @@ export default {
       background-color: #fff;
       width: 600px;
       height: 100%;
-      padding: 40px;
+      padding: 0 40px;
       transition: 0.3s;
       box-sizing: border-box;
       overflow: auto;
@@ -149,85 +161,16 @@ export default {
       margin-bottom: 40px;
    }
 
-   &__item {
-      display: flex;
-      flex-grow: 1;
-      align-items: center;
-      height: 96px;
-      padding: 12px 0;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-
-      &:last-child {
-         border-bottom: 0;
-      }
-
-      a {
-         display: flex;
-         align-items: center;
-      }
-
-      img {
-         max-width: 96px;
-         max-height: 96px;
-         margin-right: 8px;
-      }
-
-      img + div {
-         margin-right: 62px;
-      }
-
-      &_name {
-         font-weight: 300;
-         font-size: 16px;
-         line-height: 112%;
-         letter-spacing: 0.02em;
-         margin-bottom: 16px;
-      }
-
-      &__price {
-         font-weight: 600;
-      }
-
-      .Basket__counter_btn.minus {
-         margin-left: auto;
-      }
-
-      .Basket__counter_btn {
-         width: 40px;
-         height: 24px;
-         border-radius: 4px;
-         cursor: pointer;
-         flex-shrink: 0;
-      }
-
-      .Basket__counter_btn.minus {
-         background: #f2f2f2 url("../assets/svg/minus.svg") center / 10px no-repeat;
-      }
-
-      .Basket__counter_btn.plus {
-         background: #f2f2f2 url("../assets/svg/plus.svg") center / 15px no-repeat;
-      }
-
-      .Basket__counter_count {
-         min-width: 48px;
-         text-align: center;
-      }
-
-      .Basket__counter_delete {
-         width: 24px;
-         height: 24px;
-         margin-left: 43px;
-         background: url("../assets/svg/x.svg") center / contain no-repeat;
-         opacity: 0.2;
-         cursor: pointer;
-         flex-shrink: 0;
-      }
-   }
-
    &__total {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 10px 0 40px;
+      position: sticky;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #fff;
 
       &_total {
          div:first-child {
@@ -258,9 +201,54 @@ export default {
 .Basket.open {
    visibility: visible;
    opacity: 1;
+   z-index: 2;
 
    .Basket__list {
       right: 0;
+   }
+}
+
+@media (max-width: 767px) {
+   .Basket {
+
+      &__head {
+         padding: 20px 0;
+      }
+
+      &__card-basket-wrapper {
+         margin-bottom: 0;
+      }
+
+      &__title {
+         margin-bottom: 40px;
+      }
+
+      &__list {
+         padding: 0 20px;
+         width: 100%;
+      }
+
+      &__item_name {
+         font-size: 14px;
+      }
+
+      &__total {
+         position: sticky;
+         left: 0;
+         right: 0;
+         bottom: 0;
+         padding: 20px 0;
+         background-color: #fff;
+
+         button {
+            width: 150px;
+            height: 50px;
+         }
+
+         &_total div:last-child {
+            font-size: 25px ;
+         }
+      }
    }
 }
 </style>

@@ -131,6 +131,11 @@ export default {
    .Card {
       width: 25%;
       padding: 0 7px;
+
+      &:hover .img-hover {
+         visibility: hidden;
+         opacity: 0;
+      }
    }
 
    .Card__price .btn.plus {

@@ -262,6 +262,7 @@ nav a {
          top: calc(50% - 8px);
          right: calc(50% - 12px);
          padding: 6px 0;
+         cursor: pointer;
 
          span,
          span:after,

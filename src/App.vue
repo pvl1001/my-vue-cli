@@ -309,6 +309,7 @@ export default {
       },
       clickBasket() {
          this.isClickBasket = !this.isClickBasket;
+         document.body.classList.add('no-scroll')
       },
       addBasket(card) {
          if (this.cardsBasket.length) {
@@ -690,6 +691,11 @@ footer {
    background-color: #000;
 }
 
+.no-scroll {
+   overflow: hidden;
+   margin-right: 17px;
+}
+
 .titel-mobile,
 .btn-filter-mobile {
    display: none;
@@ -720,6 +726,7 @@ footer {
 
    .btn-filter-mobile {
       display: block;
+      cursor: pointer;
    }
 }
 </style>

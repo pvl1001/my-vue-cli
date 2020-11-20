@@ -29,7 +29,7 @@ export default {
          this.$emit('qtyPlus', this.priceCounter)
       },
       qtyRemove() {
-         if(this.card.qty > 1) this.card.qty--
+         if (this.card.qty > 1) this.card.qty--
          this.card.priceTotal = this.card.price * this.card.qty
       },
       deleteCard() {
@@ -191,6 +191,32 @@ export default {
 
    .Basket__list {
       right: 0;
+   }
+}
+
+@media (max-width: 767px) {
+   .Basket {
+
+      &__item {
+         height: auto !important;
+         flex-wrap: wrap;
+         position: relative;
+
+         img + div {
+            margin-right: 35px;
+         }
+
+         a {
+            width: 100%;
+            margin-bottom: 16px;
+         }
+      }
+
+      &__counter_delete {
+         position: absolute;
+         top: 25px;
+         right: 0;
+      }
    }
 }
 </style>

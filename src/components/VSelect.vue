@@ -142,5 +142,6 @@ export default {
 .select-modal.open {
    visibility: visible;
    opacity: 1;
+   z-index: 2;
 }
 </style>
